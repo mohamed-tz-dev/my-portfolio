@@ -1,17 +1,29 @@
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
+import { ExternalLink, Github } from "lucide-react";
 
 export default function ProjectCard({ project }) {
+  const reduce = useReducedMotion();
   const { id, title, description, stack, status, githubUrl, liveUrl } = project;
 
   return (
-    <article className="border rounded-2xl p-5 space-y-4">
+    <motion.article
+      whileHover={reduce ? {} : { y: -4 }}
+      transition={{ duration: 0.2 }}
+      className="border rounded-3xl p-6 space-y-4
+                 border-zinc-200/60 dark:border-zinc-800/60
+                 bg-white/60 dark:bg-zinc-950/40
+                 hover:bg-zinc-50/70 dark:hover:bg-zinc-900/40
+                 backdrop-blur transition"
+    >
       <div className="flex items-start justify-between gap-3">
-        <div className="space-y-1">
-          <h3 className="text-xl font-bold leading-tight">{title}</h3>
+        <div className="space-y-2">
+          <h3 className="text-xl font-bold tracking-tight">{title}</h3>
           <p className="opacity-80">{description}</p>
         </div>
 
-        <span className="text-xs border rounded-full px-3 py-1 opacity-80">
+        <span className="text-xs border rounded-full px-3 py-1 opacity-80
+                         border-zinc-200/70 dark:border-zinc-800/70">
           {status}
         </span>
       </div>
@@ -20,7 +32,8 @@ export default function ProjectCard({ project }) {
         {stack.map((t) => (
           <span
             key={t}
-            className="text-xs border rounded-full px-3 py-1 opacity-80"
+            className="text-xs border rounded-full px-3 py-1 opacity-80
+                       border-zinc-200/70 dark:border-zinc-800/70"
           >
             {t}
           </span>
@@ -30,7 +43,9 @@ export default function ProjectCard({ project }) {
       <div className="flex flex-wrap gap-3">
         <Link
           to={`/projects/${id}`}
-          className="rounded-xl border px-4 py-2 font-semibold"
+          className="rounded-2xl border px-4 py-2 font-semibold
+                     border-zinc-200/70 dark:border-zinc-800/70
+                     hover:bg-zinc-100/70 dark:hover:bg-zinc-900/70 transition"
         >
           Details
         </Link>
@@ -40,9 +55,11 @@ export default function ProjectCard({ project }) {
             href={githubUrl}
             target="_blank"
             rel="noreferrer"
-            className="rounded-xl border px-4 py-2 opacity-80 hover:opacity-100"
+            className="inline-flex items-center gap-2 rounded-2xl border px-4 py-2 opacity-80
+                       border-zinc-200/70 dark:border-zinc-800/70
+                       hover:opacity-100 hover:bg-zinc-100/60 dark:hover:bg-zinc-900/60 transition"
           >
-            GitHub
+            GitHub <Github size={16} />
           </a>
         ) : null}
 
@@ -51,12 +68,14 @@ export default function ProjectCard({ project }) {
             href={liveUrl}
             target="_blank"
             rel="noreferrer"
-            className="rounded-xl border px-4 py-2 opacity-80 hover:opacity-100"
+            className="inline-flex items-center gap-2 rounded-2xl border px-4 py-2 opacity-80
+                       border-zinc-200/70 dark:border-zinc-800/70
+                       hover:opacity-100 hover:bg-zinc-100/60 dark:hover:bg-zinc-900/60 transition"
           >
-            Live
+            Live <ExternalLink size={16} />
           </a>
         ) : null}
       </div>
-    </article>
+    </motion.article>
   );
 }

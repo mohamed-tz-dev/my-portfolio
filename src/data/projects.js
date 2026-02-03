@@ -10,6 +10,8 @@ export const projects = [
       "Clean system modules structure",
       "Focus on maintainability"
     ],
+    tags: ["frontend", "backend", "api", "ui"]
+
     githubUrl: "https://github.com/YOUR_USERNAME/YOUR_REPO",
     liveUrl: "",
     status: "in-progress"
