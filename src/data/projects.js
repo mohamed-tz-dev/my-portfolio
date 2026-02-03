@@ -3,32 +3,38 @@ export const projects = [
     id: "school-management-system",
     title: "School Management System",
     description:
-      "A role-based platform for managing teachers and school administration with a clear, scalable structure.",
-    stack: ["React", "Vite", "TailwindCSS", "Django (planned)", "PostgreSQL (planned)"],
+      "A role-based platform to manage staff and school operations with a clear structure that can grow over time.",
+    badge: "In Progress",
+    progress: 70,
+    tone: "from-indigo-500/20 via-zinc-500/10 to-transparent",
+    hero: "🎓",
     tags: ["frontend", "backend", "ui", "api"],
     highlights: [
       "Role-based access (Headmaster, Teacher)",
-      "Clean module structure for long-term growth",
-      "Designed for maintainability and security"
+      "Clean modules for easy maintenance",
+      "Designed with security in mind"
     ],
     githubUrl: "https://github.com/mohamed-tz-dev/my-portfolio",
     liveUrl: "",
-    status: "in-progress"
+    status: "In Progress"
   },
   {
     id: "ecommerce-website",
     title: "E-commerce Website",
     description:
-      "An e-commerce website with product browsing, cart, and checkout flow built with clean UI and reusable components.",
-    stack: ["React", "Vite", "TailwindCSS", "Django (planned)", "PostgreSQL (planned)"],
+      "An online store experience with product browsing, cart flow, and a checkout-ready structure.",
+    badge: "In Progress",
+    progress: 55,
+    tone: "from-emerald-500/20 via-zinc-500/10 to-transparent",
+    hero: "🛒",
     tags: ["frontend", "backend", "ui", "api"],
     highlights: [
-      "Product listing and product details pages",
-      "Cart and order flow (planned end-to-end)",
-      "Focus on performance and user experience"
+      "Product list and product details pages",
+      "Cart and order flow planned end-to-end",
+      "Focus on speed and clean UI"
     ],
     githubUrl: "https://github.com/mohamed-tz-dev/my-portfolio",
     liveUrl: "",
-    status: "in-progress"
+    status: "In Progress"
   }
 ];
