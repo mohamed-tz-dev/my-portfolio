@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Github } from "lucide-react";
 import { projects } from "../data/projects";
 import { useActiveSection } from "../context/activeSection";
+import TypewriterSwap from "../components/TypewriterSwap";
 
 function Divider() {
-  return (
-    <div className="h-px w-full bg-slate-200/70 dark:bg-slate-800/70" />
-  );
+  return <div className="h-px w-full bg-slate-200/70 dark:bg-slate-800/70" />;
 }
 
 function FeaturedRow({ p }) {
@@ -16,17 +15,22 @@ function FeaturedRow({ p }) {
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-2xl border border-slate-200/80 dark:border-slate-800/80
-                            bg-white/60 dark:bg-slate-950/40 grid place-items-center text-xl">
+            <div
+              className="h-10 w-10 rounded-2xl border border-slate-200/80 dark:border-slate-800/80
+                         bg-white/60 dark:bg-slate-950/40 grid place-items-center text-xl"
+            >
               {p.hero || "⭐"}
             </div>
             <h3 className="text-lg font-bold tracking-tight">{p.title}</h3>
           </div>
+
           <p className="text-sm opacity-80 max-w-2xl">{p.description}</p>
 
           {p.highlights?.length ? (
             <ul className="text-sm opacity-80 list-disc pl-5 space-y-1">
-              {p.highlights.slice(0, 2).map((h) => <li key={h}>{h}</li>)}
+              {p.highlights.slice(0, 2).map((h) => (
+                <li key={h}>{h}</li>
+              ))}
             </ul>
           ) : null}
 
@@ -38,6 +42,7 @@ function FeaturedRow({ p }) {
             >
               View case study <ArrowRight size={18} />
             </Link>
+
             {p.githubUrl ? (
               <a
                 href={p.githubUrl}
@@ -74,14 +79,17 @@ export default function Home() {
 
     const obs = new IntersectionObserver(
       (entries) => {
-        // pick the most visible section
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0))[0];
 
         if (visible?.target?.id) setActiveSection(visible.target.id);
       },
-      { root: null, threshold: [0.2, 0.35, 0.5, 0.65], rootMargin: "-15% 0px -65% 0px" }
+      {
+        root: null,
+        threshold: [0.2, 0.35, 0.5, 0.65],
+        rootMargin: "-15% 0px -65% 0px"
+      }
     );
 
     elements.forEach((el) => obs.observe(el));
@@ -97,7 +105,14 @@ export default function Home() {
         </p>
 
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-          I build clean web systems and improve them step by step.
+          I build{" "}
+          <TypewriterSwap
+            words={["reliable", "clean", "scalable", "secure"]}
+            typingMs={55}
+            deletingMs={35}
+            pauseMs={900}
+          />{" "}
+          web systems and improve them step by step.
         </h1>
 
         <p className="text-lg opacity-80 max-w-2xl">
