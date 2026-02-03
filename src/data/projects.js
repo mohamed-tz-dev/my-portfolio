@@ -15,6 +15,8 @@ export const projects = [
     liveUrl: "",
     status: "in-progress"
   },
+  tags: ["frontend", "ui", "api"]
+
   {
     id: "portfolio",
     title: "Personal Portfolio",

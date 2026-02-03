@@ -4,7 +4,10 @@ import { Moon, Sun } from "lucide-react";
 function getInitialTheme() {
   const saved = localStorage.getItem("theme");
   if (saved === "dark" || saved === "light") return saved;
-  return window.matchMedia?.("(prefers-color-scheme: dark)")?.matches ? "dark" : "light";
+
+  // fallback: system preference
+  const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
+  return prefersDark ? "dark" : "light";
 }
 
 export default function ThemeToggle() {
@@ -14,6 +17,7 @@ export default function ThemeToggle() {
     const root = document.documentElement;
     if (theme === "dark") root.classList.add("dark");
     else root.classList.remove("dark");
+
     localStorage.setItem("theme", theme);
   }, [theme]);
 
@@ -23,9 +27,10 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
-      className="rounded-xl border border-zinc-200/70 dark:border-zinc-800/70 px-3 py-2
+      className="rounded-2xl border border-zinc-200/70 dark:border-zinc-800/70 px-3 py-2
                  hover:bg-zinc-100/60 dark:hover:bg-zinc-900/60 transition"
       aria-label="Toggle theme"
+      title="Toggle theme"
     >
       <Icon size={18} />
     </button>
