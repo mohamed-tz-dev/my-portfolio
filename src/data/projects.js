@@ -1,28 +1,32 @@
 export const projects = [
   {
     id: "sms",
-    title: "School Management System (API + UI plan)",
+    title: "School Management System",
     description:
-      "Role-based system (Headmaster/Teacher) with clean permissions and scalable structure.",
+      "Role-based system (Headmaster/Teacher) with a clean permissions design and scalable modules.",
     stack: ["React", "Django (planned)", "PostgreSQL (planned)"],
+    tags: ["frontend", "backend", "ui", "api"],
     highlights: [
       "Role-based access design",
-      "Clean system modules structure",
-      "Focus on maintainability"
+      "Clean module structure",
+      "Maintainable architecture"
     ],
-    tags: ["frontend", "backend", "api", "ui"]
-
     githubUrl: "https://github.com/YOUR_USERNAME/YOUR_REPO",
     liveUrl: "",
     status: "in-progress"
   },
   {
     id: "portfolio",
-    title: "Personal Portfolio (React + Vite + Tailwind)",
+    title: "Personal Portfolio",
     description:
-      "Fast portfolio with routing, reusable components, and clean UI.",
+      "Fast portfolio with routing, reusable components, dark mode, and interactive projects filtering.",
     stack: ["React", "Vite", "TailwindCSS"],
-    highlights: ["Routing", "Reusable layout", "Optimized structure"],
+    tags: ["frontend", "ui"],
+    highlights: [
+      "Reusable layout + routing",
+      "Dark/Light theme toggle",
+      "Search + filter projects"
+    ],
     githubUrl: "https://github.com/YOUR_USERNAME/my-portfolio",
     liveUrl: "",
     status: "active"

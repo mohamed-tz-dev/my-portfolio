@@ -1,14 +1,12 @@
 @import "tailwindcss";
 
-/* Pro defaults */
 :root { color-scheme: light; }
 :root.dark { color-scheme: dark; }
 
 html, body { height: 100%; }
 
 body {
-  @apply bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100;
-  @apply antialiased;
+  @apply bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 antialiased;
 }
 
 ::selection {
