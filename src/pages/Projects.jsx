@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Search, X } from "lucide-react";
+import { Search, X, ArrowRight } from "lucide-react";
 import { projects } from "../data/projects";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -31,7 +31,6 @@ export default function Projects() {
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-
     return (projects || []).filter((p) => {
       const title = (p.title || "").toLowerCase();
       const desc = (p.description || "").toLowerCase();
@@ -44,9 +43,12 @@ export default function Projects() {
   return (
     <section className="space-y-6">
       <header className="space-y-2">
-        <h2 className="text-2xl font-bold tracking-tight">Projects</h2>
+        <p className="text-xs font-semibold tracking-wide text-indigo-700 dark:text-indigo-200">
+          PROJECTS
+        </p>
+        <h1 className="text-3xl font-bold tracking-tight">Work in progress, built with structure.</h1>
         <p className="opacity-80 max-w-2xl">
-          A focused list of projects with clear descriptions and progress.
+          Each project has a case study showing the problem, approach, decisions, and next steps.
         </p>
       </header>
 
@@ -57,8 +59,8 @@ export default function Projects() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search..."
-            className="w-full rounded-2xl border bg-transparent pl-10 pr-10 py-2
+            placeholder="Search projects..."
+            className="w-full rounded-2xl border bg-white/40 dark:bg-slate-950/20 pl-10 pr-10 py-2
                        border-slate-200/80 dark:border-slate-800/80
                        focus:outline-none focus:ring-2 focus:ring-indigo-400/30"
           />
@@ -98,55 +100,71 @@ export default function Projects() {
       </div>
 
       {/* List */}
-      <div className="divide-y divide-slate-200/70 dark:divide-slate-800/70 border-t border-b
-                      border-slate-200/70 dark:border-slate-800/70">
-        <AnimatePresence mode="popLayout">
-          {filtered.map((p) => (
-            <motion.div
-              key={p.id}
-              layout
-              initial={reduce ? false : { opacity: 0, y: 8 }}
-              animate={reduce ? false : { opacity: 1, y: 0 }}
-              exit={reduce ? false : { opacity: 0, y: 8 }}
-              transition={{ duration: 0.15 }}
-              className="py-5"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div className="space-y-2">
-                  <h3 className="font-bold tracking-tight">{p.title}</h3>
-                  <p className="text-sm opacity-80 max-w-2xl">{p.description}</p>
-
-                  {p.highlights?.length ? (
-                    <ul className="text-sm opacity-80 list-disc pl-5 space-y-1">
-                      {p.highlights.slice(0, 2).map((h) => (
-                        <li key={h}>{h}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </div>
-
-                {p.status ? (
-                  <span className="text-xs rounded-full px-3 py-1 border border-slate-200/80 dark:border-slate-800/80 opacity-80">
-                    {p.status}
-                  </span>
-                ) : null}
-              </div>
-
-              <div className="mt-3">
-                <Link
-                  to={`/projects/${p.id}`}
-                  className="text-sm font-semibold text-indigo-700 dark:text-indigo-200 underline"
+      <div className="rounded-3xl border border-slate-200/70 dark:border-slate-800/70 bg-white/55 dark:bg-slate-950/35 overflow-hidden">
+        <div className="divide-y divide-slate-200/70 dark:divide-slate-800/70">
+          <AnimatePresence mode="popLayout">
+            {filtered.map((p, idx) => (
+              <motion.div
+                key={p.id}
+                layout
+                initial={reduce ? false : { opacity: 0, y: 10 }}
+                animate={reduce ? false : { opacity: 1, y: 0 }}
+                exit={reduce ? false : { opacity: 0, y: 10 }}
+                transition={{ duration: 0.18, delay: reduce ? 0 : Math.min(idx * 0.03, 0.12) }}
+                className="p-5"
+              >
+                <motion.div
+                  whileHover={reduce ? {} : { y: -2 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex items-start justify-between gap-4"
                 >
-                  View details
-                </Link>
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/60 dark:bg-slate-950/40 grid place-items-center text-xl">
+                        {p.hero || "⭐"}
+                      </div>
+                      <div>
+                        <h3 className="font-bold tracking-tight">{p.title}</h3>
+                        <p className="text-sm opacity-80 max-w-2xl">{p.description}</p>
+                      </div>
+                    </div>
 
-        {filtered.length === 0 ? (
-          <div className="py-6 opacity-80">No projects found.</div>
-        ) : null}
+                    <div className="flex flex-wrap gap-2">
+                      {(p.stack || []).slice(0, 4).map((t) => (
+                        <span
+                          key={t}
+                          className="text-xs rounded-full px-3 py-1 border border-slate-200/80 dark:border-slate-800/80 opacity-80"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <Link
+                      to={`/projects/${p.id}`}
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 dark:text-indigo-200"
+                    >
+                      View case study <ArrowRight size={16} />
+                    </Link>
+                  </div>
+
+                  {p.status ? (
+                    <span className="text-xs rounded-full px-3 py-1 border border-slate-200/80 dark:border-slate-800/80 opacity-80">
+                      {p.status}
+                    </span>
+                  ) : null}
+                </motion.div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+
+          {filtered.length === 0 ? (
+            <div className="p-8 text-center">
+              <p className="font-semibold">No results</p>
+              <p className="text-sm opacity-75 mt-1">Try a different keyword or reset filters.</p>
+            </div>
+          ) : null}
+        </div>
       </div>
     </section>
   );

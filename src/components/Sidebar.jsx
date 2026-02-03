@@ -1,17 +1,18 @@
 import { NavLink, useLocation } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
-import { Github, Mail } from "lucide-react";
+import { Github, Mail, Sparkles } from "lucide-react";
 import { useActiveSection } from "../context/activeSection";
+import { motion, useReducedMotion } from "framer-motion";
 
 const navClass = ({ isActive }) =>
   [
-    "block rounded-2xl px-3 py-2 text-sm transition",
+    "relative block rounded-2xl px-3 py-2 text-sm transition",
     isActive
       ? "bg-indigo-600/10 text-indigo-700 dark:text-indigo-200 dark:bg-indigo-400/10 font-semibold"
       : "text-slate-700 dark:text-slate-200 opacity-90 hover:bg-slate-100/70 dark:hover:bg-slate-900/60"
   ].join(" ");
 
-function ChapterButton({ id, title, subtitle, active, onClick }) {
+function ChapterButton({ title, subtitle, active, onClick }) {
   return (
     <button
       type="button"
@@ -23,7 +24,6 @@ function ChapterButton({ id, title, subtitle, active, onClick }) {
           ? "bg-indigo-600/10 text-indigo-700 dark:text-indigo-200 dark:bg-indigo-400/10"
           : "hover:bg-slate-100/70 dark:hover:bg-slate-900/60"
       ].join(" ")}
-      aria-label={`Go to ${title}`}
     >
       <div className="text-xs font-semibold tracking-wide opacity-80">{title}</div>
       <div className="text-sm opacity-85">{subtitle}</div>
@@ -35,6 +35,7 @@ export default function Sidebar() {
   const { pathname } = useLocation();
   const onHome = pathname === "/";
   const { activeSection } = useActiveSection();
+  const reduce = useReducedMotion();
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -48,17 +49,29 @@ export default function Sidebar() {
                  bg-white/70 dark:bg-slate-950/70 backdrop-blur"
     >
       <div className="p-6 space-y-6">
-        {/* Accent strip */}
-        <div className="h-1.5 w-16 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500" />
-
-        {/* Identity */}
-        <div className="space-y-1">
-          <div className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-50">
-            Mohamed<span className="opacity-60">.</span>
+        {/* Top identity block */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="h-11 w-11 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/60 dark:bg-slate-950/40 grid place-items-center">
+              <Sparkles size={18} className="opacity-80" />
+            </div>
+            <div>
+              <div className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-50">
+                Mohamed<span className="opacity-60">.</span>
+              </div>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Clean structure • Steady progress
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-slate-600 dark:text-slate-300">
-            Clean structure. Steady progress. Real projects.
-          </p>
+
+          {/* Animated accent strip */}
+          <motion.div
+            initial={reduce ? false : { opacity: 0, x: -8 }}
+            animate={reduce ? false : { opacity: 1, x: 0 }}
+            transition={{ duration: 0.25 }}
+            className="h-1.5 w-24 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500"
+          />
         </div>
 
         {/* Main nav */}
@@ -69,7 +82,7 @@ export default function Sidebar() {
           <NavLink to="/contact" className={navClass}>Contact</NavLink>
         </nav>
 
-        {/* Chapters (only on Home) */}
+        {/* Chapters on Home */}
         {onHome ? (
           <div className="space-y-2">
             <div className="text-xs font-semibold tracking-wide text-slate-700 dark:text-slate-200 opacity-80">
@@ -78,28 +91,24 @@ export default function Sidebar() {
 
             <div className="space-y-2">
               <ChapterButton
-                id="intro"
                 title="CHAPTER 1"
                 subtitle="Introduction"
                 active={activeSection === "intro"}
                 onClick={() => scrollTo("intro")}
               />
               <ChapterButton
-                id="work"
                 title="CHAPTER 2"
                 subtitle="Featured work"
                 active={activeSection === "work"}
                 onClick={() => scrollTo("work")}
               />
               <ChapterButton
-                id="proof"
                 title="CHAPTER 3"
                 subtitle="Proof of work"
                 active={activeSection === "proof"}
                 onClick={() => scrollTo("proof")}
               />
               <ChapterButton
-                id="cta"
                 title="CHAPTER 4"
                 subtitle="Contact"
                 active={activeSection === "cta"}
@@ -109,9 +118,11 @@ export default function Sidebar() {
           </div>
         ) : null}
 
-        {/* Quick links */}
+        {/* Quick links (hover motion) */}
         <div className="space-y-2">
-          <a
+          <motion.a
+            whileHover={reduce ? {} : { y: -2 }}
+            transition={{ duration: 0.15 }}
             href="https://github.com/mohamed-tz-dev"
             target="_blank"
             rel="noreferrer"
@@ -121,9 +132,11 @@ export default function Sidebar() {
                        hover:bg-slate-100/70 dark:hover:bg-slate-900/60 transition"
           >
             <Github size={16} /> GitHub
-          </a>
+          </motion.a>
 
-          <a
+          <motion.a
+            whileHover={reduce ? {} : { y: -2 }}
+            transition={{ duration: 0.15 }}
             href="mailto:mohamedhalf360@gmail.com?subject=Project%20Inquiry"
             className="inline-flex w-full items-center gap-2 rounded-2xl border px-3 py-2 text-sm
                        border-slate-200/80 dark:border-slate-800/80
@@ -131,7 +144,7 @@ export default function Sidebar() {
                        hover:bg-slate-100/70 dark:hover:bg-slate-900/60 transition"
           >
             <Mail size={16} /> Email
-          </a>
+          </motion.a>
         </div>
       </div>
 
