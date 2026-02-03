@@ -1,79 +1,155 @@
-import { Link } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
+import { projects } from "../data/projects";
 
-export default function ProjectCard({ project }) {
-  const reduce = useReducedMotion();
-  const { id, title, description, stack = [], status, githubUrl, liveUrl } = project;
-
+function Section({ title, children }) {
   return (
-    <motion.article
-      whileHover={reduce ? {} : { y: -4 }}
-      transition={{ duration: 0.2 }}
-      className="rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 p-6 space-y-4
-                 bg-white/60 dark:bg-zinc-950/40 backdrop-blur
-                 hover:bg-zinc-50/70 dark:hover:bg-zinc-900/40 transition"
-    >
-      <div className="flex items-start justify-between gap-4">
-        <div className="space-y-2">
-          <h3 className="text-xl font-bold tracking-tight leading-snug">{title}</h3>
-          <p className="opacity-80">{description}</p>
+    <section className="space-y-2">
+      <h3 className="text-sm font-semibold tracking-wide text-slate-700 dark:text-slate-200">
+        {title}
+      </h3>
+      <div className="text-slate-700 dark:text-slate-200 opacity-90">{children}</div>
+    </section>
+  );
+}
+
+export default function ProjectDetails() {
+  const { id } = useParams();
+
+  const project = (projects || []).find((p) => p.id === id);
+
+  // ✅ Defensive: show nice message instead of crashing
+  if (!project) {
+    return (
+      <section className="space-y-4">
+        <p className="text-sm font-semibold text-indigo-700 dark:text-indigo-200">
+          Project
+        </p>
+        <h2 className="text-2xl font-bold tracking-tight">Project not found</h2>
+        <p className="opacity-80 max-w-2xl">
+          The project you’re looking for does not exist or the link is incorrect.
+        </p>
+
+        <div className="flex gap-3">
+          <Link
+            to="/projects"
+            className="rounded-2xl px-4 py-2 font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition"
+          >
+            Back to Projects
+          </Link>
+          <Link
+            to="/"
+            className="rounded-2xl px-4 py-2 border border-slate-200/80 dark:border-slate-800/80
+                       hover:bg-slate-100/70 dark:hover:bg-slate-900/60 transition"
+          >
+            Go Home
+          </Link>
         </div>
 
-        {status ? (
-          <span className="text-xs border rounded-full px-3 py-1 opacity-80 border-zinc-200/70 dark:border-zinc-800/70">
-            {status}
-          </span>
-        ) : null}
+        <div className="text-sm opacity-70">
+          Debug: Requested id = <span className="font-semibold">{String(id)}</span>
+        </div>
+      </section>
+    );
+  }
+
+  const {
+    title,
+    description,
+    status,
+    highlights = [],
+    githubUrl,
+    liveUrl
+  } = project;
+
+  return (
+    <article className="space-y-8">
+      {/* Header */}
+      <header className="space-y-3">
+        <p className="text-sm font-semibold text-indigo-700 dark:text-indigo-200">
+          Project
+        </p>
+
+        <div className="flex items-start justify-between gap-4">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{title}</h1>
+          {status ? (
+            <span className="text-xs rounded-full px-3 py-1 border border-slate-200/80 dark:border-slate-800/80 opacity-80">
+              {status}
+            </span>
+          ) : null}
+        </div>
+
+        <p className="text-lg opacity-80 max-w-3xl">{description}</p>
+
+        <div className="flex flex-wrap gap-3 pt-1">
+          {githubUrl ? (
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl px-4 py-2 font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition"
+            >
+              View on GitHub
+            </a>
+          ) : null}
+
+          {liveUrl ? (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl px-4 py-2 border border-slate-200/80 dark:border-slate-800/80
+                         hover:bg-slate-100/70 dark:hover:bg-slate-900/60 transition"
+            >
+              Live Demo
+            </a>
+          ) : (
+            <span className="text-sm opacity-60 self-center">Live demo: coming soon</span>
+          )}
+
+          <Link
+            to="/projects"
+            className="rounded-2xl px-4 py-2 border border-slate-200/80 dark:border-slate-800/80
+                       hover:bg-slate-100/70 dark:hover:bg-slate-900/60 transition"
+          >
+            Back
+          </Link>
+        </div>
+      </header>
+
+      {/* Body: case-study style */}
+      <div className="space-y-6">
+        <Section title="Overview">
+          <p>
+            This project is being built step by step with a focus on clean structure, stable workflows, and
+            maintainable code.
+          </p>
+        </Section>
+
+        <Section title="Key highlights">
+          {highlights.length ? (
+            <ul className="list-disc pl-5 space-y-2 opacity-90">
+              {highlights.map((h) => (
+                <li key={h}>{h}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="opacity-70">Highlights will be added soon.</p>
+          )}
+        </Section>
+
+        <Section title="Next steps">
+          <ul className="list-disc pl-5 space-y-2 opacity-90">
+            <li>Complete core feature flow end-to-end.</li>
+            <li>Add screenshots and short case-study notes.</li>
+            <li>Polish UI and accessibility.</li>
+          </ul>
+        </Section>
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        {stack.map((t) => (
-          <span
-            key={t}
-            className="text-xs border rounded-full px-3 py-1 opacity-80 border-zinc-200/70 dark:border-zinc-800/70"
-          >
-            {t}
-          </span>
-        ))}
-      </div>
-
-      <div className="flex flex-wrap gap-3 pt-1">
-        <Link
-          to={`/projects/${id}`}
-          className="rounded-2xl border px-4 py-2 font-semibold
-                     border-zinc-200/70 dark:border-zinc-800/70
-                     hover:bg-zinc-100/70 dark:hover:bg-zinc-900/70 transition"
-        >
-          Details
-        </Link>
-
-        {githubUrl ? (
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-2xl border px-4 py-2 opacity-80
-                       border-zinc-200/70 dark:border-zinc-800/70
-                       hover:opacity-100 hover:bg-zinc-100/60 dark:hover:bg-zinc-900/60 transition"
-          >
-            GitHub <Github size={16} />
-          </a>
-        ) : null}
-
-        {liveUrl ? (
-          <a
-            href={liveUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-2xl border px-4 py-2 opacity-80
-                       border-zinc-200/70 dark:border-zinc-800/70
-                       hover:opacity-100 hover:bg-zinc-100/60 dark:hover:bg-zinc-900/60 transition"
-          >
-            Live <ExternalLink size={16} />
-          </a>
-        ) : null}
-      </div>
-    </motion.article>
+      {/* Footer */}
+      <footer className="pt-2 text-sm opacity-70">
+        Tip: Keep project pages short, clear, and updated as you build.
+      </footer>
+    </article>
   );
 }
