@@ -51,7 +51,8 @@ export default function Home() {
             </Link>
 
             <a
-              href="https://github.com/mohamed-tz-dev"
+             href="https://github.com/mohamed-tz-dev"
+
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-2xl border px-4 py-2 opacity-80

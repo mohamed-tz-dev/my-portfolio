@@ -1,36 +1,34 @@
 export const projects = [
   {
-    id: "sms",
+    id: "school-management-system",
     title: "School Management System",
     description:
-      "Role-based system (Headmaster/Teacher) with a clean permissions design and scalable modules.",
-    stack: ["React", "Django (planned)", "PostgreSQL (planned)"],
+      "A role-based platform for managing teachers and school administration with a clear, scalable structure.",
+    stack: ["React", "Vite", "TailwindCSS", "Django (planned)", "PostgreSQL (planned)"],
     tags: ["frontend", "backend", "ui", "api"],
     highlights: [
-      "Role-based access design",
-      "Clean module structure",
-      "Maintainable architecture"
+      "Role-based access (Headmaster, Teacher)",
+      "Clean module structure for long-term growth",
+      "Designed for maintainability and security"
     ],
-    githubUrl: "https://github.com/YOUR_USERNAME/YOUR_REPO",
+    githubUrl: "https://github.com/mohamed-tz-dev/my-portfolio",
     liveUrl: "",
     status: "in-progress"
   },
-  tags: ["frontend", "ui", "api"]
-
   {
-    id: "portfolio",
-    title: "Personal Portfolio",
+    id: "ecommerce-website",
+    title: "E-commerce Website",
     description:
-      "Fast portfolio with routing, reusable components, dark mode, and interactive projects filtering.",
-    stack: ["React", "Vite", "TailwindCSS"],
-    tags: ["frontend", "ui"],
+      "An e-commerce website with product browsing, cart, and checkout flow built with clean UI and reusable components.",
+    stack: ["React", "Vite", "TailwindCSS", "Django (planned)", "PostgreSQL (planned)"],
+    tags: ["frontend", "backend", "ui", "api"],
     highlights: [
-      "Reusable layout + routing",
-      "Dark/Light theme toggle",
-      "Search + filter projects"
+      "Product listing and product details pages",
+      "Cart and order flow (planned end-to-end)",
+      "Focus on performance and user experience"
     ],
-    githubUrl: "https://github.com/YOUR_USERNAME/my-portfolio",
+    githubUrl: "https://github.com/mohamed-tz-dev/my-portfolio",
     liveUrl: "",
-    status: "active"
+    status: "in-progress"
   }
 ];
